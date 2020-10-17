@@ -4,7 +4,6 @@
 Build a SpringBoot arguments parser using TDD
 
 ## Arguments
-
 name | type | required | value required | default value
 -----|------|----------|----------------|--------------
 -l| boolean | false | no | true
