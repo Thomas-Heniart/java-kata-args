@@ -1,6 +1,6 @@
 package com.kata.arguments;
 
-import com.kata.arguments.cli.CLIService;
+import com.kata.arguments.parsers.ArgumentsParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -10,11 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ArgumentsApplication implements ApplicationRunner {
 
-  private final CLIService cliService;
+  private final ArgumentsParser argumentsParser;
 
   @Autowired
-  public ArgumentsApplication(CLIService cliService) {
-    this.cliService = cliService;
+  public ArgumentsApplication(ArgumentsParser argumentsParser) {
+    this.argumentsParser = argumentsParser;
   }
 
   public static void main(String[] args) {
@@ -23,6 +23,6 @@ public class ArgumentsApplication implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) {
-    cliService.parse(args);
+    argumentsParser.parse(args);
   }
 }

@@ -1,4 +1,4 @@
-package com.kata.arguments.cli;
+package com.kata.arguments.parsers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,13 +10,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.DefaultApplicationArguments;
 
-class CLIServiceTest {
+class ArgumentsParserTest {
 
-  private CLIService cliService;
+  private ArgumentsParser argumentsParser;
 
   @BeforeEach
   void setUp() {
-    cliService = new CLIService();
+    argumentsParser = new ArgumentsParser();
   }
 
   @AfterEach
@@ -27,7 +27,7 @@ class CLIServiceTest {
   void parse_ShouldFailForIllegalArguments(String[] arguments, String message) {
     var args = new DefaultApplicationArguments(arguments);
 
-    assertThrows(IllegalArgumentException.class, () -> cliService.parse(args), message);
+    assertThrows(IllegalArgumentException.class, () -> argumentsParser.parse(args), message);
   }
 
   @ParameterizedTest
@@ -35,7 +35,7 @@ class CLIServiceTest {
   void parse_ShouldWorkForArguments(String[] arguments) {
     var args = new DefaultApplicationArguments(arguments);
 
-    assertTrue(cliService.parse(args));
+    assertTrue(argumentsParser.parse(args));
   }
 
   private static Stream<Arguments> provideIllegalArguments() {
@@ -43,7 +43,7 @@ class CLIServiceTest {
         Arguments.of(new String[] {"-l", "10"}, "boolean argument does not have parameter"),
         Arguments.of(new String[] {"-p', 'string"}, "integer argument must have integer parameter"),
         Arguments.of(new String[] {"-d"}, "path argument must be followed by a path parameter"),
-        Arguments.of(new String[] {"-fake"}, "fake is not supported"));
+        Arguments.of(new String[] {"-fake"}, "-fake is not supported"));
   }
 
   private static Stream<Arguments> provideArguments() {
